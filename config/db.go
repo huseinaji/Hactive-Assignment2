@@ -1,4 +1,4 @@
-package databases
+package config
 
 import (
 	"fmt"
@@ -15,22 +15,19 @@ var (
 	password = "123456"
 	dbPort   = "5432"
 	dbname   = "orders_by"
-	db       *gorm.DB
-	err      error
+	DB       *gorm.DB
 )
 
-func StartDB() {
+func DBInit() {
 	config := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", host, user, password, dbname, dbPort)
 
-	db, err = gorm.Open(postgres.Open(config), &gorm.Config{})
+	database, err := gorm.Open(postgres.Open(config), &gorm.Config{})
 
 	if err != nil {
 		log.Fatal("error connecting database: ", err)
 	}
 
-	db.Debug().AutoMigrate(models.Order{}, models.Item{})
-}
-
-func GetDB() *gorm.DB {
-	return db
+	database.AutoMigrate(models.Order{}, models.Item{})
+	fmt.Println("connected to database")
+	DB = database
 }

@@ -1,21 +1,19 @@
 package routers
 
 import (
-	"net/http"
+	"go_restapi_assignment2/controllers"
 
 	"github.com/gin-gonic/gin"
 )
 
 func StartServer() *gin.Engine {
+	// inDB := &controllers.InDB{DB: db}
+
 	router := gin.Default()
 
-	router.GET("/", tesServer)
+	router.GET("/", controllers.TesServer)
+	router.POST("/order", controllers.CreateOrders)
+	router.GET("/order", controllers.GetOrders)
 
 	return router
-}
-
-func tesServer(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, gin.H{
-		"message": "server is running",
-	})
 }
