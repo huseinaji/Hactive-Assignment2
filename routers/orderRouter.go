@@ -7,13 +7,13 @@ import (
 )
 
 func StartServer() *gin.Engine {
-	// inDB := &controllers.InDB{DB: db}
-
 	router := gin.Default()
 
 	router.GET("/", controllers.TesServer)
 	router.POST("/order", controllers.CreateOrders)
 	router.GET("/order", controllers.GetOrders)
+	router.PUT("/order/:orderId", controllers.UpdateOrders)
+	router.DELETE("/order/:orderId", controllers.DeleteOrders)
 
 	return router
 }
